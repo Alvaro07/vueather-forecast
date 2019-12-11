@@ -4,6 +4,11 @@ import router from './router'
 import store from './store'
 import './registerServiceWorker'
 
+// register vue awesome icon component
+import 'vue-awesome/icons'
+import Icon from 'vue-awesome/components/Icon'
+Vue.component('v-icon', Icon)
+
 Vue.config.productionTip = false
 
 new Vue({

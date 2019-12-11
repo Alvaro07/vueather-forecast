@@ -1,5 +1,4 @@
 module.exports = {
-  publicPath: 'vueather-forecast',
   css: {
     loaderOptions: {
       sass: {
