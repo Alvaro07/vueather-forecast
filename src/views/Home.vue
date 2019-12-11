@@ -1,11 +1,16 @@
 <template>
-  <div class="home">
-    <form @submit.prevent="daySearch">
-      <input type="text" v-model="search" />
-      <button>Buscar</button>
+  <section>
+
+    <form @submit.prevent="daySearch" class="search-form" :class="weatherDay ? 'search-form--fixed' : null"  >
+      <InputField v-model="search" extraClass="margin-right-10" />
+      <Button text="SEARCH" icon="search" />
     </form>
 
-    <template v-if="forecast">
+    <p v-if="error" class="search-error">{{ error }}</p>
+
+    <DayCard v-if="weatherDay" :data="weatherDay"/>
+
+    <!-- <template v-if="forecast">
       <h3>{{forecast.city}}</h3>
       <ul>
         <li v-for="(item, i) in forecast.timeList" :key="i">
@@ -18,27 +23,37 @@
           </ul>
         </li>
       </ul>
-    </template>
+    </template> -->
 
-    <div v-if="isLoading">Cargando ...</div>
-     <pre>{{$data}}</pre>
-  </div>
+    <Loader v-if="isLoading" />
 
+  </section>
 </template>
 
 <script>
 // @ is an alias to /src
 import axios from 'axios'
 import { apiKey } from '../../apiKey'
+import InputField from '../components/InputField'
+import Button from '../components/Button'
+import Loader from '../components/Loader'
+import DayCard from '../components/DayCard'
 
 export default {
   name: 'home',
+  components: {
+    InputField,
+    Button,
+    Loader,
+    DayCard
+  },
   data () {
     return {
       search: '',
       isLoading: false,
       weatherDay: null,
-      forecast: null
+      forecast: null,
+      error: null
     }
   },
   methods: {
@@ -66,12 +81,14 @@ export default {
             })
           }
         })
-        .catch(error => {
+        .catch(() => {
           this.isLoading = false
-          console.log(error)
+          this.forecast = null
+          this.error = 'The city not exists, try again.'
         })
         .finally(() => {
           this.search = ''
+          console.log(this.forecast)
         })
     },
 
@@ -96,14 +113,36 @@ export default {
             snow: data.snow ? `${data.snow}mm` : '0mm'
           }
         })
-        .catch(error => {
+        .catch(() => {
           this.isLoading = false
-          console.log(error)
+          this.weatherDay = null
+          this.error = 'The city not exists, try again.'
         })
         .finally(() => {
           this.search = ''
+          console.log(this.weatherDay)
         })
     }
   }
 }
 </script>
+
+<style lang="scss">
+.search-form {
+  display: flex;
+  transition: 2s all ease;
+
+  &--fixed {
+    position: fixed;
+    top: 30px;
+    left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.search-error {
+  text-align: center;
+  padding-top: 10px;
+}
+</style>
