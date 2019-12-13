@@ -16,6 +16,6 @@
   align-items: center;
   justify-content: center;
   min-height: 100%;
-  padding: 30px;
+  padding: 100px 30px 30px 30px;
 }
 </style>

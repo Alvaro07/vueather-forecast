@@ -5,13 +5,18 @@
       <p class="card-day__description">{{ this.data.weather.description }}</p>
       <h5 class="card-day__hour">{{ this.data.day }} {{ new Date().getHours() }}:{{new Date().getMinutes()}}</h5>
       <h3 class="card-day__temp">{{ this.data.temp }}</h3>
-
+      <Button text="See all forecast" size="big" @onClick="() => this.$router.push({ name: 'Forecast', params: { city: data.city } })" />
   </section>
 </template>
 
 <script>
+import Button from './Button'
+
 export default {
   name: 'DayCard',
+  components: {
+    Button
+  },
   props: ['data'],
   computed: {
     weatherIcon () {
@@ -65,6 +70,7 @@ export default {
 
   &__temp {
     font-size: 4rem;
+    margin-bottom: 20px;
   }
 }
 </style>
