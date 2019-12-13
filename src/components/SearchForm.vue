@@ -39,10 +39,12 @@ export default {
 
   &--fixed {
     position: fixed;
-    top: 30px;
+    top: 0;
     left: 0;
     width: 100%;
     justify-content: center;
+    background-color: white;
+    padding: 20px 0;
   }
 }
 

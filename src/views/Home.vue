@@ -1,24 +1,14 @@
 <template>
   <section>
 
-    <SearchForm @onSubmit="data => daySearch(data)" :data="weatherDay" v-model="search" />
+    <SearchForm
+      @onSubmit="data => daySearch(data)"
+      :data="weatherDay"
+      v-model="search"
+      :error="error"
+    />
+
     <DayCard v-if="weatherDay" :data="weatherDay"/>
-
-    <!-- <template v-if="forecast">
-      <h3>{{forecast.city}}</h3>
-      <ul>
-        <li v-for="(item, i) in forecast.timeList" :key="i">
-          <ul>
-            <li>{{ item.day }}</li>
-            <li>{{ item.hour }}</li>
-            <li>{{ item.temp }}</li>
-            <li>{{ item.wind }}</li>
-            <li>{{ item.rain }}</li>
-          </ul>
-        </li>
-      </ul>
-    </template> -->
-
     <Loader v-if="isLoading" />
 
   </section>
@@ -32,7 +22,7 @@ import Loader from '../components/Loader'
 import DayCard from '../components/DayCard'
 
 export default {
-  name: 'home',
+  name: 'Home',
   components: {
     Loader,
     DayCard,
@@ -111,7 +101,6 @@ export default {
         })
         .finally(() => {
           this.search = ''
-          console.log(this.weatherDay)
         })
     }
   }
